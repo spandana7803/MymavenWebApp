@@ -1,49 +1,10 @@
 pipeline {
-    agent any  
-
-    tools {
-        maven 'Maven'  
-    }
-
+    agent any
     stages {
-        stage('Clean Workspace') {
+        stage('Test') {
             steps {
-                deleteDir()   // 🔥 clears old code
+                echo 'PIPELINE IS RUNNING'
             }
-        }
-
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/spandana7803/MymavenWebApp.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Archive') {
-            steps {
-                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-                // Add real deployment here
-            }
-        }    
-    }
-
-    post {
-        success {
-            echo 'Build and deployment successful!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
 }
