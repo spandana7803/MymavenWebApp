@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()   // 🔥 clears old code
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/spandana7803/MymavenWebApp.git'
@@ -26,7 +32,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'mvn clean package'
+                echo 'Deploying application...'
+                // Add real deployment here
             }
         }    
     }
