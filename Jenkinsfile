@@ -1,14 +1,14 @@
 pipeline {
-    agent any
+    agent any  
 
     tools {
-        maven 'Maven'
+        maven 'Maven'  
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/spandana7803/MymavenWebApp.git'
+                git branch: 'main', url: 'https://github.com/spandana7803/MymavenWebApp.git'
             }
         }
 
@@ -26,11 +26,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploy stage - add your deployment commands here'
-                // Example:
-                // sh 'cp target/*.war /opt/tomcat/webapps/'
+                sh 'mvn clean package'
             }
-        }
+        }    
     }
 
     post {
