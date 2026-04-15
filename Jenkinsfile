@@ -1,10 +1,42 @@
 pipeline {
-    agent any
+    agent any  
+
+    tools {
+        maven 'Maven'  
+    }
+
     stages {
-        stage('Test') {
+        stage('Checkout') {
             steps {
-                echo 'PIPELINE IS RUNNING'
+                git branch: 'main', url: 'https://github.com/spandana7803/MymavenWebApp.git'
             }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }    
+    }
+
+    post {
+        success {
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
